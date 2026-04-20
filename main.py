@@ -27,9 +27,9 @@ class ChatResponse(BaseModel):
     response: str
 
 
-@app.get("/")
-def home():
-    return {"message": "Hello from Vercel 🚀"}
+@app.get("/health")
+def health_check():
+    return {"status": "ok", "service": "Anwaar's Personal Assistant"}
 
 
 @app.get("/chat", response_model=ChatResponse)
