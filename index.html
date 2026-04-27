@@ -447,7 +447,7 @@ footer{padding:32px 80px;border-top:1px solid var(--gold-border);display:flex;ju
 </footer>
 
 <script>
-const CHAT_API = 'http://127.0.0.1:8000/chat';
+const CHAT_API = 'https://n8nserver.metaviz.pro/webhook/anwaar-chat';
 
 async function sendMsg(){
   const input = document.getElementById('chatInput');
@@ -468,7 +468,11 @@ async function sendMsg(){
   msgs.scrollTop = msgs.scrollHeight;
 
   try {
-    const url = `${CHAT_API}?query=${encodeURIComponent(text)}`;
+    const res = await fetch(CHAT_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: text })
+    });
     const res = await fetch(url);
     if(!res.ok) throw new Error('Server error: ' + res.status);
     const data = await res.json();
